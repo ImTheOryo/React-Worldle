@@ -1,8 +1,9 @@
 import type {ParamType} from "../types/ParamType.ts";
 
 export class Service<T> {
-    apiUrl: string;
-    ressource: string;
+    private readonly apiUrl: string;
+    private  readonly ressource: string;
+    private params: string  = '';
 
     constructor(
         ressource: string,
@@ -13,7 +14,7 @@ export class Service<T> {
         if (params) this.setApiUrlParams(params);
     }
 
-    setApiUrlParams(
+    private setApiUrlParams(
         params: ParamType
     ) {
         const paramsArray = Object.entries(params);
@@ -23,16 +24,31 @@ export class Service<T> {
         })
 
         if (queryParams.length > 0) {
-            this.apiUrl = this.apiUrl + `?${queryParams.join('&')}`;
+            this.params = `?${queryParams.join('&')}`;
         }
     }
 
-    async getResource(): Promise<T[] | undefined>{
+    private setFormattedUrl(
+        search: string = ''
+    ): string {
+        let path: string = this.apiUrl;
+        if (search.trim().length > 0) {
+            path += `/${search}`;
+        }
+        const url = new URL(path);
+
+        return url.toString() + this.params;
+    }
+
+    public async getResource(
+        search: string = ''
+    ): Promise<T[] | undefined>{
+        const url: string = this.setFormattedUrl(search)
         try {
-            const response = await fetch(this.apiUrl, {
+            const response = await fetch(url, {
                 method: 'GET',
             });
-            if (!response.ok) {
+            if (response.ok) {
                 return await response.json();
             }
             throw new Error(response.statusText);
@@ -40,4 +56,5 @@ export class Service<T> {
             console.error(`Erreur survenue lors de la récupération de la ressource (${this.ressource}) : ${error}`);
         }
     }
+
 }
