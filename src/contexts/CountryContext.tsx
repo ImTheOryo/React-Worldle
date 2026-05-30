@@ -1,4 +1,4 @@
-import {createContext, useEffect, useState} from "react";
+import {createContext, useContext, useEffect, useMemo, useState} from "react";
 import type {CountryContextType} from "../types/context/CountryContextType.ts";
 import type {GenericProviderProps} from "../types/context/GenericProviderProps.ts";
 import type {Country} from "../types/CountryType.ts";
@@ -18,14 +18,7 @@ export function CountryContextProvider({ children }: GenericProviderProps){
     const [loading, setLoading] = useState<boolean>(false);
     const [filteredCountries, setFilteredCountries] = useState<Country[]>([]);
 
-    const service = new CountryService();
-
-    const fetchCountries = async (): Promise<void> => {
-        setLoading(true);
-        const data = await service.getResource();
-        setCountries(data ?? []);
-        setLoading(false);
-    };
+    const service: CountryService = useMemo(() => new CountryService(), []);
 
     const search = (
         query: string = '',
@@ -44,14 +37,24 @@ export function CountryContextProvider({ children }: GenericProviderProps){
     };
 
     useEffect(() => {
-        fetchCountries();
-    }, [fetchCountries]);
+        const fetchCountries = async (): Promise<void> => {
+            setLoading(true);
+            const data = await service.getResource();
+            setCountries(data ?? []);
+            setLoading(false);
+        };
+        fetchCountries().then()
+    }, [service]);
 
     return (
         <CountryContext.Provider value={{countries, search, filteredCountries, loading}}>
             {children}
         </CountryContext.Provider>
     )
+}
 
-
+export function useCountry() {
+    const context = useContext(CountryContext);
+    if (!context) throw new Error('useCountry doit être dans un CountryProvider');
+    return context;
 }
