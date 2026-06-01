@@ -8,7 +8,8 @@ const HistoryContext = createContext<HistoryContextType | null>(null)
 
 export function HistoryContextProvider({ children}: GenericProviderProps) {
     const [guestedCountries, setGuestedCountries] = useState<Country[]>([]);
-    const { date } = useGame();
+    const { date, setIsWin, selectedCountry } = useGame();
+
 
     const pushGuestedCountries = (country: Country) => {
         if (guestedCountries.includes(country)) return
@@ -26,10 +27,13 @@ export function HistoryContextProvider({ children}: GenericProviderProps) {
             if (storedData) {
                 const alreadyGuesses: Country[] = JSON.parse(storedData);
                 setGuestedCountries(alreadyGuesses);
+                if (alreadyGuesses[0].name.common === selectedCountry?.name?.common) {
+                    setIsWin(true)
+                }
             }
         }
         setGuesses()
-    }, [date]);
+    }, [date, selectedCountry]);
 
     return (
         <HistoryContext.Provider

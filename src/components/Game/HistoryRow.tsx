@@ -13,10 +13,6 @@ export function HistoryRow({ country }: HistoryRowProps) {
 
     if (!selectedCountry) return null;
 
-    if (country === selectedCountry) {
-        setIsWin(true);
-    }
-
     const formatCurrencies = (c?: any) => c ? Object.values(c).map((curr: any) => curr.name).join(', ') : '-';
     const formatLanguages = (l?: any) => l ? Object.values(l).join(', ') : '-';
     const formatBool = (b?: boolean) => b ? 'Yes' : 'No';
