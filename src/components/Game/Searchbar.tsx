@@ -1,12 +1,17 @@
-import {useState} from "react";
-import {useCountry} from "../../contexts/CountryContext.tsx";
+import {useMemo, useState} from "react";
 import type {Country} from "../../types/CountryType.ts";
-import {useGame} from "../../contexts/GameContext.tsx";
+import {useHistory} from "../../contexts/HistoryContext.tsx";
+import {useSearch} from "../../hooks/useSearch.ts";
 
 export function SearchBar() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const { search, filteredCountries } = useCountry()
-    const { guestedCountries, pushGuestedCountries } = useGame()
+    const { pushGuestedCountries } = useHistory()
+    const [searchInput, setSearchInput] = useState("");
+    const { search } = useSearch()
+
+    const filteredCountries = useMemo(() => {
+        return search(searchInput)
+    }, [searchInput, search])
 
     return (
         <div className="relative w-72 font-sans">
@@ -31,7 +36,8 @@ export function SearchBar() {
             focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-colors
             "
                     placeholder="Rechercher …"
-                    onChange={(e) => search(e.target.value, guestedCountries)}
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
                     onFocus={() => setIsOpen(true)}
                 />
             </div>
@@ -56,13 +62,13 @@ export function SearchBar() {
                     "
                             onClick={() => {
                                 pushGuestedCountries(country);
-                                search('', guestedCountries);
+                                setSearchInput("");
                             }}
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter' || e.key === ' ') {
                                     e.preventDefault();
                                     pushGuestedCountries(country);
-                                    search('', guestedCountries);
+                                    setSearchInput("");
                                 }
                             }}
                         >
