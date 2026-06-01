@@ -13,7 +13,7 @@ createRoot(document.getElementById('root')!).render(
         providers={[
             <CountryContextProvider />,
             <GameContextProvider />,
-            <HistoryContextProvider/>,
+            <HistoryContextProvider />,
         ]}
     >
         <App />
