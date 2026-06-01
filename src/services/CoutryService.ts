@@ -6,7 +6,7 @@ export class CountryService extends Service<Country>{
     constructor() {
         const ressource: string = "all"
         const params: ParamType = {
-            "field" : [
+            "fields" : [
                 "name",
                 "languages",
                 "currencies",
