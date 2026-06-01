@@ -6,7 +6,5 @@ export interface GameContextType {
     selectedCountry: Country | null;
     date: Date;
     setDate: (query: Date) => void;
-    checkWinCondition: (query: Country) => boolean;
-    guestedCountries: Country[];
-    pushGuestedCountries: (query: Country) => void;
+    setIsWin: (isWin: boolean) => void;
 }
