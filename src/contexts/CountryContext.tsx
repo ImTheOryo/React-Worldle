@@ -1,8 +1,9 @@
-import {createContext, useContext, useEffect, useMemo, useState} from "react";
+import {createContext, useCallback, useContext, useEffect, useMemo, useState} from "react";
 import type {CountryContextType} from "../types/context/CountryContextType.ts";
 import type {GenericProviderProps} from "../types/context/GenericProviderProps.ts";
 import type {Country} from "../types/CountryType.ts";
 import {CountryService} from "../services/CoutryService.ts";
+import {cleanString} from "../utils/utils.ts";
 
 const CountryContext = createContext<CountryContextType | null>(null);
 
@@ -33,6 +34,6 @@ export function CountryContextProvider({ children }: GenericProviderProps){
 
 export function useCountry() {
     const context = useContext(CountryContext);
-    if (!context) throw new Error('useCountry doit être dans un CountryProvider');
+    if (!context) throw new Error('useCountry doit Ãªtre dans un CountryProvider');
     return context;
 }
