@@ -2,6 +2,7 @@ import {SearchBar} from "../../components/Game/Searchbar.tsx";
 import {History} from "../../components/Game/History.tsx";
 import {WinScreen} from "../Win/Win.tsx";
 import {useGame} from "../../contexts/GameContext.tsx";
+import FlagConfetti from "../../components/FlagConfetti.tsx";
 
 export function Game() {
 
@@ -20,7 +21,13 @@ export function Game() {
             </div>
 
             {
-                isWin ? <WinScreen /> : <SearchBar />}
+                isWin ?
+                    <>
+                        <WinScreen />
+                        <FlagConfetti/>
+                    </>
+                    :
+                    <SearchBar />}
 
             <History />
         </div>
