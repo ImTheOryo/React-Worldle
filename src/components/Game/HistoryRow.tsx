@@ -8,7 +8,6 @@ interface HistoryRowProps {
 
 export function HistoryRow({ country }: HistoryRowProps) {
     const { selectedCountry } = useGame();
-    const { setIsWin } = useGame()
 
     if (!selectedCountry) return null;
 

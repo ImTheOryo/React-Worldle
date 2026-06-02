@@ -1,9 +1,8 @@
-import {createContext, useCallback, useContext, useEffect, useMemo, useState} from "react";
+import {createContext, useContext, useEffect, useMemo, useState} from "react";
 import type {CountryContextType} from "../types/context/CountryContextType.ts";
 import type {GenericProviderProps} from "../types/context/GenericProviderProps.ts";
 import type {Country} from "../types/CountryType.ts";
 import {CountryService} from "../services/CoutryService.ts";
-import {cleanString} from "../utils/utils.ts";
 
 const CountryContext = createContext<CountryContextType | null>(null);
 
