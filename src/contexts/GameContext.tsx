@@ -8,7 +8,6 @@ import {shuffleArrayWithSeed} from "../utils/utils.ts";
 const GameContext = createContext<GameContextType | null>(null);
 
 export function GameContextProvider({ children }: GenericProviderProps) {
-    const [loading, setLoading] = useState<boolean>(false);
     const [isWin, setIsWin] = useState<boolean>(false);
     const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
     const [date, setDate] = useState<Date>(new Date());
@@ -38,7 +37,7 @@ export function GameContextProvider({ children }: GenericProviderProps) {
     return (
         <GameContext.Provider
             value={{
-                loading, isWin, date, setDate, setIsWin, selectedCountry, START_DATE
+                isWin, date, setDate, setIsWin, selectedCountry, START_DATE
             }}
         >
             {children}
