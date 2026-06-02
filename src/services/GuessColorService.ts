@@ -1,8 +1,8 @@
 import type { Country } from "../types/CountryType.ts";
 
-const COLOR_EXACT = "bg-green-500 text-white border-green-600";
-const COLOR_PARTIAL = "bg-orange-500 text-white border-orange-600";
-const COLOR_WRONG = "bg-red-500 text-white border-red-600";
+const COLOR_EXACT = "bg-green-700 text-white border-green-800"; // Ratio ~ 5.1:1
+const COLOR_PARTIAL = "bg-orange-700 text-white border-orange-800"; // Ratio ~ 5.1:1
+const COLOR_WRONG = "bg-red-700 text-white border-red-800"; // Ratio ~ 5.7:1
 
 export function getGuessColor(guessedCountry: Country, targetCountry: Country, property: keyof Country): string {
     const guessedVal = guessedCountry[property];
