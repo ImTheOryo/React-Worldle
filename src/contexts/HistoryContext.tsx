@@ -18,6 +18,10 @@ export function HistoryContextProvider({ children}: GenericProviderProps) {
 
         setGuestedCountries(newGuestedCountries);
         localStorage.setItem(dateGuesses, JSON.stringify(newGuestedCountries))
+
+        if (country.name.common === selectedCountry?.name?.common) {
+            setIsWin(true)
+        }
     }
 
     useEffect(() => {
