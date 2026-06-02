@@ -78,7 +78,7 @@ export function SearchBar() {
                             <img
                                 className="fit-picture w-6 h-auto shrink-0 shadow-sm"
                                 src={country.flags.png}
-                                alt={country.flags.alt}
+                                alt=''
                                 aria-hidden="true"
                             />
 
