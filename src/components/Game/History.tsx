@@ -2,41 +2,46 @@ import { useHistory } from "../../contexts/HistoryContext.tsx";
 import { HistoryRow } from "./HistoryRow.tsx";
 
 export function History() {
-    const { guestedCountries } = useHistory()
+    const { guestedCountries } = useHistory();
     const headers = [
-        "Country", "Region", "Subregion", "Currency(ies)", "Language(s)", "Is independent"
+        "Pays", "Région", "Sous-région", "Monnaie(s)", "Langue(s)", "Indépendant"
     ];
 
     return (
-        <div className="w-full max-w-6xl mx-auto mt-8 overflow-x-auto p-4">
+        <div className="w-full max-w-6xl mx-auto mt-4 overflow-x-auto p-4 z-10">
             {guestedCountries.length > 0 && (
-                <div className="min-w-225 flex flex-col gap-4">
-
+                <table className="w-full min-w-[900px] border-separate border-spacing-y-3" role="grid">
                     {/* EN-TÊTE */}
-                    <div className="grid grid-cols-6 gap-3 text-sm font-bold uppercase">
+                    <thead>
+                    <tr>
                         {headers.map((header, index) => (
-                            <div key={index} className="flex flex-col items-center justify-end">
-                                <span className="mb-2 text-center">{header}</span>
-                                <div className="w-4/5 h-1 bg-white rounded-full"></div>
-                            </div>
+                            <th
+                                key={index}
+                                scope="col"
+                                className="pb-2 px-2 text-center text-xs font-bold text-slate-500 uppercase tracking-wider border-b-2 border-slate-200"
+                            >
+                                {header}
+                            </th>
                         ))}
-                    </div>
+                    </tr>
+                    </thead>
 
-                    {/* CORPS (Historique des tentatives) */}
-                    <div className="flex flex-col mt-2">
-                        {guestedCountries.length === 0 ? (
-                            <div className="p-8 text-center rounded-lg">
+                    {/* CORPS -> historique */}
+                    <tbody>
+                    {guestedCountries.length === 0 ? (
+                        <tr>
+                            <td colSpan={6} className="p-8 text-center text-slate-500 rounded-lg bg-white shadow-sm border border-slate-200">
                                 Aucun pays trouvé pour le moment.
-                            </div>
-                        ) : (
-                            guestedCountries.map((country) => (
-                                <HistoryRow key={country.name.official} country={country} />
-                            ))
-                        )}
-                    </div>
-
-                </div>
+                            </td>
+                        </tr>
+                    ) : (
+                        guestedCountries.map((country) => (
+                            <HistoryRow key={country.name.official} country={country} />
+                        ))
+                    )}
+                    </tbody>
+                </table>
             )}
         </div>
-    )
+    );
 }

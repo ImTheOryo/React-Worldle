@@ -1,6 +1,5 @@
 import type { Country } from "../../types/CountryType.ts";
 import { useGame } from "../../contexts/GameContext.tsx";
-import { HistoryCell } from "./HistoryCell.tsx";
 import { getGuessColor } from "../../services/GuessColorService.ts";
 
 interface HistoryRowProps {
@@ -17,49 +16,43 @@ export function HistoryRow({ country }: HistoryRowProps) {
     const formatLanguages = (l?: any) => l ? Object.values(l).join(', ') : '-';
     const formatBool = (b?: boolean) => b ? 'Yes' : 'No';
 
-    const baseCellClass = "border-2 flex items-center justify-center text-center p-2 min-h-25 font-bold shadow-md transition-colors duration-700";
+    const baseCellClass = "border-2 align-middle text-center p-2 h-[80px] font-bold shadow-md transition-colors duration-700";
 
     const nameColor = country.name.common === selectedCountry.name.common
         ? 'bg-green-500 text-white border-green-600'
         : 'bg-red-500 text-white border-red-600';
 
     return (
-        <div className="grid grid-cols-6 gap-3 mb-3">
+        <tr className="group hover:opacity-95 transition-opacity">
             {/* 1. Country */}
-            <HistoryCell
-                value={country.name.common}
-                cssClass={`${baseCellClass} ${nameColor}`}
-            />
+            <td className={`${baseCellClass} ${nameColor} rounded-l-xl w-1/6`}>
+                <div className="line-clamp-3">{country.name.common || '-'}</div>
+            </td>
 
             {/* 2. Region */}
-            <HistoryCell
-                value={country.region}
-                cssClass={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'region')}`}
-            />
+            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'region')} w-1/6`}>
+                <div className="line-clamp-3">{country.region || '-'}</div>
+            </td>
 
             {/* 3. Subregion */}
-            <HistoryCell
-                value={country.subregion}
-                cssClass={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'subregion')}`}
-            />
+            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'subregion')} w-1/6`}>
+                <div className="line-clamp-3">{country.subregion || '-'}</div>
+            </td>
 
             {/* 4. Currencies */}
-            <HistoryCell
-                value={formatCurrencies(country.currencies)}
-                cssClass={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'currencies')}`}
-            />
+            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'currencies')} w-1/6`}>
+                <div className="line-clamp-3">{formatCurrencies(country.currencies)}</div>
+            </td>
 
             {/* 5. Languages */}
-            <HistoryCell
-                value={formatLanguages(country.languages)}
-                cssClass={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'languages')}`}
-            />
+            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'languages')} w-1/6`}>
+                <div className="line-clamp-3">{formatLanguages(country.languages)}</div>
+            </td>
 
             {/* 6. Is independent */}
-            <HistoryCell
-                value={formatBool(country.independent)}
-                cssClass={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'independent')}`}
-            />
-        </div>
+            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'independent')} rounded-r-xl w-1/6`}>
+                <div className="line-clamp-3">{formatBool(country.independent)}</div>
+            </td>
+        </tr>
     );
 }
