@@ -7,6 +7,7 @@ export function NativeDatePicker() {
     const handleDateChange = (date: Date): void => {
         setIsWin(false);
         setDate(date);
+        console.log(date)
     }
 
     const formatDateToYMD = (dateObj: Date): string => {
@@ -29,7 +30,7 @@ export function NativeDatePicker() {
                 type="date"
                 id={"datePicker"}
                 name={"datePicker"}
-                value={date.toString()}
+                value={formatDateToYMD(date)}
                 onChange={(e) => handleDateChange(new Date(e.target.value))}
                 min={formatDateToYMD(START_DATE)}
                 max={formatDateToYMD(currentDate)}
