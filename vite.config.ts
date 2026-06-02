@@ -8,4 +8,8 @@ export default defineConfig({
       react(),
       tailwindcss(),
   ],
+    optimizeDeps: {
+      force: true,
+    },
+    base: './',
 })
