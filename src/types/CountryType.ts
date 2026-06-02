@@ -31,4 +31,5 @@ export interface Country {
     independent: boolean,
     region: string,
     subregion: string,
+    latlng: [number, number],
 }

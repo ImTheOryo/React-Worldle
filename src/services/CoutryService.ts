@@ -14,6 +14,7 @@ export class CountryService extends Service<Country>{
                 "region",
                 "subregion",
                 "flags",
+                "latlng"
             ]
         }
         super(ressource, params);
