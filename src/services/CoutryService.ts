@@ -12,7 +12,8 @@ export class CountryService extends Service<Country>{
                 "currencies",
                 "independent",
                 "region",
-                "subregion"
+                "subregion",
+                "flags",
             ]
         }
         super(ressource, params);

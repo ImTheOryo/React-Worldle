@@ -56,10 +56,12 @@ export function SearchBar() {
                             tabIndex={0}
                             aria-selected="false"
                             className="
-                    px-4 py-2 text-sm cursor-pointer transition-colors text-gray-700
-                    hover:bg-blue-50 hover:text-blue-700 hover:font-medium
-                    focus:bg-blue-50 focus:text-blue-700 focus:font-medium focus:outline-none
-                    "
+                px-4 py-2 text-sm cursor-pointer transition-all text-gray-700
+                flex items-center gap-3
+                hover:bg-blue-50 hover:text-blue-700 hover:font-medium
+                focus:bg-blue-50 focus:text-blue-700 focus:font-medium
+                focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-600
+            "
                             onClick={() => {
                                 pushGuestedCountries(country);
                                 setSearchInput("");
@@ -72,7 +74,14 @@ export function SearchBar() {
                                 }
                             }}
                         >
-                            {country.name.common}
+                            <img
+                                className="fit-picture w-6 h-auto shrink-0 shadow-sm"
+                                src={country.flags.png}
+                                alt={country.flags.alt}
+                                aria-hidden="true"
+                            />
+
+                            <span>{country.name.common}</span>
                         </li>
                     ))}
                 </ul>

@@ -3,6 +3,7 @@ import {History} from "../../components/Game/History.tsx";
 import {WinScreen} from "../Win/Win.tsx";
 import {useGame} from "../../contexts/GameContext.tsx";
 import {ModalPlayOtherDay} from "../../components/Win/ModalPlayOtherDay.tsx";
+import FlagConfetti from "../../components/FlagConfetti.tsx";
 
 export function Game() {
 
@@ -22,13 +23,13 @@ export function Game() {
 
             {isWin ?
                 <>
+                    <FlagConfetti/>
                     <ModalPlayOtherDay/>
                     <WinScreen />
                 </>
                 :
                 <SearchBar />
             }
-
             <History />
         </div>
     )
