@@ -1,6 +1,7 @@
 import type { Country } from "../../types/CountryType.ts";
 import { useGame } from "../../contexts/GameContext.tsx";
 import { getGuessColor } from "../../services/GuessColorService.ts";
+import {getDistanceBetweenTwoPoints} from "calculate-distance-between-coordinates";
 
 interface HistoryRowProps {
     country: Country;
@@ -24,7 +25,7 @@ export function HistoryRow({ country }: HistoryRowProps) {
     return (
         <tr className="group hover:opacity-95 transition-opacity">
             {/* 1. Country */}
-            <td className={`${baseCellClass} ${nameColor} rounded-l-xl w-1/6`}>
+            <td className={`${baseCellClass} ${nameColor} rounded-l-xl w-1/7`}>
                 <div className="flex justify-center items-center gap-3">
                     <img
                         className="fit-picture w-6 h-auto shrink-0 shadow-sm"
@@ -37,28 +38,42 @@ export function HistoryRow({ country }: HistoryRowProps) {
             </td>
 
             {/* 2. Region */}
-            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'region')} w-1/6`}>
+            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'region')} w-1/7`}>
                 <div className="line-clamp-3">{country.region || '-'}</div>
             </td>
 
             {/* 3. Subregion */}
-            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'subregion')} w-1/6`}>
+            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'subregion')} w-1/7`}>
                 <div className="line-clamp-3">{country.subregion || '-'}</div>
             </td>
 
             {/* 4. Currencies */}
-            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'currencies')} w-1/6`}>
+            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'currencies')} w-1/7`}>
                 <div className="line-clamp-3">{formatCurrencies(country.currencies)}</div>
             </td>
 
             {/* 5. Languages */}
-            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'languages')} w-1/6`}>
+            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'languages')} w-1/7`}>
                 <div className="line-clamp-3">{formatLanguages(country.languages)}</div>
             </td>
 
             {/* 6. Is independent */}
-            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'independent')} rounded-r-xl w-1/6`}>
+            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'independent')} w-1/7`}>
                 <div className="line-clamp-3">{formatBool(country.independent)}</div>
+            </td>
+
+            {/* 7. Distance par rapport au pays selected */}
+            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'latlng')} rounded-r-xl w-1/7`}>
+                <div>
+                    {
+                        getDistanceBetweenTwoPoints(
+                            {lat: country.latlng[0], lon: country.latlng[1]},
+                            {lat: selectedCountry.latlng[0], lon: selectedCountry.latlng[1]},
+                            "km"
+                        ).toFixed(2)
+                    }
+                    km
+                </div>
             </td>
         </tr>
     );
