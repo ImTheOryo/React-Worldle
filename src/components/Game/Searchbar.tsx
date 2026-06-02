@@ -47,7 +47,7 @@ export function SearchBar() {
                     id="country-listbox"
                     role="listbox"
                     aria-label="Liste des pays suggérés"
-                    className="max-h-40 overflow-y-auto"
+                    className="z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-40 overflow-y-auto"
                 >
                     {filteredCountries.map((country: Country) => (
                         <li
@@ -56,12 +56,13 @@ export function SearchBar() {
                             tabIndex={0}
                             aria-selected="false"
                             className="
-                px-4 py-2 text-sm cursor-pointer transition-all text-gray-700
-                flex items-center gap-3
-                hover:bg-blue-50 hover:text-blue-700 hover:font-medium
-                focus:bg-blue-50 focus:text-blue-700 focus:font-medium
-                focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-600
-            "
+                    px-4 py-2 text-sm cursor-pointer transition-all text-gray-700
+                    flex items-center gap-3
+                    hover:bg-blue-50 hover:text-blue-700 hover:font-medium
+                    focus:bg-blue-50 focus:text-blue-700 focus:font-medium
+                    focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-600
+                    first:rounded-t-lg last:rounded-b-lg
+                "
                             onClick={() => {
                                 pushGuestedCountries(country);
                                 setSearchInput("");
