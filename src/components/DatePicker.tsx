@@ -7,7 +7,6 @@ export function NativeDatePicker() {
     const handleDateChange = (date: Date): void => {
         setIsWin(false);
         setDate(date);
-        console.log(date)
     }
 
     const formatDateToYMD = (dateObj: Date): string => {
