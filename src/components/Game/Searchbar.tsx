@@ -72,7 +72,14 @@ export function SearchBar() {
                                 }
                             }}
                         >
-                            {country.name.common}
+                            <img
+                                className="fit-picture w-6 h-auto shrink-0 shadow-sm"
+                                src={country.flags.png}
+                                alt={country.flags.alt}
+                                aria-hidden="true"
+                            />
+
+                            <span>{country.name.common}</span>
                         </li>
                     ))}
                 </ul>

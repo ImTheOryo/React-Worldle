@@ -19,14 +19,22 @@ export function HistoryRow({ country }: HistoryRowProps) {
     const baseCellClass = "border-2 align-middle text-center p-2 h-[80px] font-bold shadow-md transition-colors duration-700";
 
     const nameColor = country.name.common === selectedCountry.name.common
-        ? 'bg-green-500 text-white border-green-600'
-        : 'bg-red-500 text-white border-red-600';
+        ? 'bg-green-700 text-white border-green-800'
+        : 'bg-red-700 text-white border-red-800'
 
     return (
         <tr className="group hover:opacity-95 transition-opacity">
             {/* 1. Country */}
             <td className={`${baseCellClass} ${nameColor} rounded-l-xl w-1/6`}>
-                <div className="line-clamp-3">{country.name.common || '-'}</div>
+                <div className="flex justify-center items-center gap-3">
+                    <img
+                        className="fit-picture w-6 h-auto shrink-0 shadow-sm"
+                        src={country.flags.png}
+                        alt=""
+                        aria-hidden="true"
+                    />
+                    <span className="line-clamp-3">{country.name.common}</span>
+                </div>
             </td>
 
             {/* 2. Region */}
