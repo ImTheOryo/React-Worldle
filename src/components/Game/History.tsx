@@ -4,7 +4,7 @@ import { HistoryRow } from "./HistoryRow.tsx";
 export function History() {
     const { guestedCountries } = useHistory();
     const headers = [
-        "Pays", "Région", "Sous-région", "Monnaie(s)", "Langue(s)", "Indépendant"
+        "Pays", "Région", "Sous-région", "Monnaie(s)", "Langue(s)", "Indépendant", "Distance avec le pays rechercher"
     ];
 
     return (

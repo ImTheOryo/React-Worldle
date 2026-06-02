@@ -37,9 +37,9 @@ export function getGuessColor(guessedCountry: Country, targetCountry: Country, p
             "km"
         )
 
-        if (distance <= 5000) return COLOR_PARTIAL
-
-        return COLOR_WRONG;
+        if (distance === 0) return COLOR_EXACT;
+        else if (distance <= 5000) return COLOR_PARTIAL
+        else return COLOR_WRONG;
 
     }
 
