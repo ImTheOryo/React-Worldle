@@ -1,6 +1,6 @@
 import {SearchBar} from "../../components/Game/Searchbar.tsx";
 import {History} from "../../components/Game/History.tsx";
-import {WinScreen} from "./Win.tsx";
+import {WinScreen} from "../Win/Win.tsx";
 import {useGame} from "../../contexts/GameContext.tsx";
 
 export function Game() {

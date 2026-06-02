@@ -1,5 +1,6 @@
 import { useGame } from "../../contexts/GameContext.tsx";
 import { useHistory } from "../../contexts/HistoryContext.tsx";
+import {NativeDatePicker} from "../../components/DatePicker.tsx";
 
 export function WinScreen() {
     const { selectedCountry } = useGame();
@@ -31,6 +32,17 @@ export function WinScreen() {
                         <p className="text-slate-500 text-xs uppercase font-bold mb-1">Région</p>
                         <p className="text-xl font-bold text-slate-700">{selectedCountry.region}</p>
                     </div>
+                </div>
+            </div>
+
+            <div className="bg-slate-50 rounded-xl p-6 border border-slate-200 shadow-sm flex flex-col items-center gap-4 w-full transition-all hover:shadow-md">
+                <div className="text-center">
+                    <h3 className="text-slate-800 font-bold text-lg">Envie de rejouer ?</h3>
+                    <p className="text-slate-500 text-sm mt-1">Choisissez une autre date pour trouver un nouveau pays.</p>
+                </div>
+
+                <div className="w-full flex justify-center mt-2">
+                    <NativeDatePicker />
                 </div>
             </div>
         </div>
