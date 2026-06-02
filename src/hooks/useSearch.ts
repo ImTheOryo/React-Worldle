@@ -12,17 +12,19 @@ export function useSearch(){
 
         const excludedNames = new Set(guestedCountries.map(c => c.name.common));
 
-        return countries.filter((country: Country) => {
-            if (excludedNames.has(country.name.common)) {
-                return false;
-            }
+        return countries
+            .filter((country: Country) => {
+                if (excludedNames.has(country.name.common)) {
+                    return false;
+                }
 
-            if (!query || query.trim() === '') {
-                return true;
-            }
+                if (!query || query.trim() === '') {
+                    return true;
+                }
 
-            return cleanString(country.name.common).includes(cleanString(query));
-        });
+                return cleanString(country.name.common).includes(cleanString(query));
+            })
+            .sort((a: Country,b: Country) => a.name.common.localeCompare(b.name.common));
     }, [countries, guestedCountries]);
 
     return { search };
