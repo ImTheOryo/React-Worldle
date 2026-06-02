@@ -7,4 +7,5 @@ export interface GameContextType {
     date: Date;
     setDate: (query: Date) => void;
     setIsWin: (isWin: boolean) => void;
+    START_DATE: Date;
 }

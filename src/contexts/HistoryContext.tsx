@@ -31,10 +31,14 @@ export function HistoryContextProvider({ children}: GenericProviderProps) {
             if (storedData) {
                 const alreadyGuesses: Country[] = JSON.parse(storedData);
                 setGuestedCountries(alreadyGuesses);
-                if (alreadyGuesses[0].name.common === selectedCountry?.name?.common) {
+                if (alreadyGuesses.find(
+                    (country: Country) => country.name.common === selectedCountry?.name.common)
+                ) {
                     setIsWin(true)
                 }
+                return
             }
+            setGuestedCountries([])
         }
         setGuesses()
     }, [date, selectedCountry]);

@@ -12,7 +12,9 @@ export function GameContextProvider({ children }: GenericProviderProps) {
     const [isWin, setIsWin] = useState<boolean>(false);
     const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
     const [date, setDate] = useState<Date>(new Date());
+    const START_DATE = useMemo(() => new Date('2024-01-01'), []);
     const MASTER_SEED = 987654321; //TODO Changer la MASTER_SEED plus tard
+
 
     const { countries } = useCountry();
 
@@ -24,7 +26,6 @@ export function GameContextProvider({ children }: GenericProviderProps) {
         const selectCountry = (date: Date) => {
             if (shuffleCountries.length === 0) return;
 
-            const START_DATE = new Date('2024-01-01');
             const diffTime = Math.abs(date.getTime() - START_DATE.getTime());
             const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
@@ -37,7 +38,7 @@ export function GameContextProvider({ children }: GenericProviderProps) {
     return (
         <GameContext.Provider
             value={{
-                loading, isWin, date, setDate, setIsWin, selectedCountry,
+                loading, isWin, date, setDate, setIsWin, selectedCountry, START_DATE
             }}
         >
             {children}
