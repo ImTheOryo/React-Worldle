@@ -8,9 +8,9 @@ export function History() {
     ];
 
     return (
-        <div className="w-full max-w-6xl mx-auto mt-4 overflow-x-auto p-4 z-10">
+        <div className="w-full max-w-6xl mx-auto overflow-x-auto p-4 z-10">
             {guestedCountries.length > 0 && (
-                <table className="w-full min-w-[900px] border-separate border-spacing-y-3" role="grid">
+                <table className="w-full min-w-225 border-separate border-spacing-y-3" role="grid">
                     {/* EN-TÊTE */}
                     <thead>
                     <tr>
