@@ -11,5 +11,5 @@ export default defineConfig({
     optimizeDeps: {
       force: true,
     },
-    base: './',
+    base: '/react-worldle/',
 })
