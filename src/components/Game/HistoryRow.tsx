@@ -33,7 +33,7 @@ export function HistoryRow({ country }: HistoryRowProps) {
                         alt=""
                         aria-hidden="true"
                     />
-                    <span className="line-clamp-3">{country.name.common}</span>
+                    <span className="line-clamp-3">{country.translations.fra.common || country.name.common}</span>
                 </div>
             </td>
 

@@ -19,7 +19,7 @@ export function WinScreen() {
             <div className="p-8 flex flex-col items-center">
                 <div className="text-center mb-6">
                     <p className="text-sm uppercase tracking-widest text-slate-400 font-semibold mb-1">Destination</p>
-                    <p className="text-4xl font-black text-slate-800">{selectedCountry.name.common}</p>
+                    <p className="text-4xl font-black text-slate-800">{selectedCountry.translations.fra.common}</p>
                 </div>
 
                 <div className="flex gap-4 w-full justify-center mb-8">

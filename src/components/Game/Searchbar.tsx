@@ -84,7 +84,7 @@ export function SearchBar() {
                                 aria-hidden="true"
                             />
 
-                            <span>{country.name.common}</span>
+                            <span>{country.translations.fra.common}</span>
                         </li>
                     ))}
                 </ul>
