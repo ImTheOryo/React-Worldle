@@ -11,8 +11,8 @@ export function GameContextProvider({ children }: GenericProviderProps) {
     const [isWin, setIsWin] = useState<boolean>(false);
     const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
     const [date, setDate] = useState<Date>(new Date());
-    const START_DATE = useMemo(() => new Date('2024-01-01'), []);
-    const MASTER_SEED = 456727541253869; //TODO Changer la MASTER_SEED plus tard
+    const START_DATE: Date = useMemo(() => new Date('2024-01-01'), []);
+    const MASTER_SEED: number = 814729; //TODO Changer la MASTER_SEED plus tard
 
 
     const { countries } = useCountry();
