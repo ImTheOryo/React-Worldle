@@ -4,9 +4,9 @@ Un projet frontend complet inspiré du concept "Un Jour Un Film", mais revisité
 
 ## Membres de l'équipe et rôles
 
-* **Camille Pinault** - :
+* **Camille Pinault** - Fullstack Developer: Création de l'historique, Interface, Règles du jeu
 
-* **Enory D'Huisser** - :
+* **Enory D'Huysser** - Fullstack Developer: Logique de jeu, Gestion des champs initiaux, SearchBox
 
 
 ## Univers sélectionné
