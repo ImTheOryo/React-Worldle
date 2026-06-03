@@ -39,7 +39,6 @@ export function SearchBar() {
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                     onFocus={() => setIsOpen(true)}
-                    onBlur={() => setIsOpen(false)}
                 />
             </div>
 
@@ -67,12 +66,14 @@ export function SearchBar() {
                             onClick={() => {
                                 pushGuestedCountries(country);
                                 setSearchInput("");
+                                setIsOpen(false);
                             }}
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter' || e.key === ' ') {
                                     e.preventDefault();
                                     pushGuestedCountries(country);
                                     setSearchInput("");
+                                    setIsOpen(false);
                                 }
                             }}
                         >
@@ -83,7 +84,7 @@ export function SearchBar() {
                                 aria-hidden="true"
                             />
 
-                            <span>{country.name.common}</span>
+                            <span>{country.translations.fra.common}</span>
                         </li>
                     ))}
                 </ul>

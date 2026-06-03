@@ -19,12 +19,6 @@ export function NativeDatePicker() {
 
     return (
         <div className="mb-4">
-            <label htmlFor={"datePicker"} className="block mb-2 font-bold text-gray-900">
-
-            </label>
-            <span className="block mb-2 text-sm text-gray-700">
-                Format attendu : jj/mm/aaaa
-            </span>
             <input
                 type="date"
                 id={"datePicker"}

@@ -32,4 +32,7 @@ export interface Country {
     region: string,
     subregion: string,
     latlng: [number, number],
+    translations:{
+        [languageCode: string]: NativeName
+    }
 }
