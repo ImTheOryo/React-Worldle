@@ -43,8 +43,9 @@ export default function FlagConfetti() {
             className="fixed inset-0 pointer-events-none z-50 overflow-hidden"
             aria-hidden="true"
         >
-            {confetti.map((piece) => (
+            {confetti.map((piece, index) => (
                 <img
+                    key={`confetti-${index}`}
                     src={piece.src}
                     alt=""
                     className="absolute top-[-4%] w-8 h-auto animate-flag-fall shadow-sm"
