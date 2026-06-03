@@ -12,7 +12,7 @@ export function GameContextProvider({ children }: GenericProviderProps) {
     const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
     const [date, setDate] = useState<Date>(new Date());
     const START_DATE: Date = useMemo(() => new Date('2024-01-01'), []);
-    const MASTER_SEED: number = 814729; //TODO Changer la MASTER_SEED plus tard
+    const MASTER_SEED: number = 814729;
 
 
     const { countries } = useCountry();
