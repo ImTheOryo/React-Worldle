@@ -30,7 +30,6 @@ export function GameContextProvider({ children }: GenericProviderProps) {
 
             const countryIndex = diffDays % shuffleCountries.length;
             setSelectedCountry(shuffleCountries[countryIndex]);
-            console.log(selectedCountry)
         };
         selectCountry(date)
     }, [date, shuffleCountries]);
