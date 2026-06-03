@@ -39,6 +39,7 @@ export function SearchBar() {
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                     onFocus={() => setIsOpen(true)}
+                    onBlur={() => setIsOpen(false)}
                 />
             </div>
 
