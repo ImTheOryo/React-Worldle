@@ -70,6 +70,9 @@ export function RulesModal({ isOpen, onClose }: RulesModalProps) {
                             <span><strong>Rouge :</strong> La donnée est incorrecte.</span>
                         </li>
                     </ul>
+                    <div className="pt-4 mt-4 border-t border-slate-100">
+                        <p className="text-xs text-slate-500 mt-1">Fait par Camille et Enory sous la supervision de Gauthier</p>
+                    </div>
 
                     <div className="pt-4 mt-4 border-t border-slate-100">
                         <p className="font-semibold text-slate-800">Prêt au décollage ?</p>
