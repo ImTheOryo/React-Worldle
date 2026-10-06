@@ -2,15 +2,13 @@ import type {ParamType} from "../types/ParamType.ts";
 
 export class Service<T> {
     private readonly apiUrl: string;
-    private  readonly ressource: string;
     private params: string  = '';
+    private readonly API_KEY = import.meta.env.VITE_API_KEY;
 
     constructor(
-        ressource: string,
         params: ParamType | null = null
     ) {
-        this.apiUrl = `https://restcountries.com/v3.1/${ressource}`;
-        this.ressource = ressource;
+        this.apiUrl = `https://api.restcountries.com/countries/v5`;
         if (params) this.setApiUrlParams(params);
     }
 
@@ -23,37 +21,41 @@ export class Service<T> {
             return `${key}=${value.join(',')}`;
         })
 
-        if (queryParams.length > 0) {
+        if (queryParams.length > 0 && this.params === '') {
             this.params = `?${queryParams.join('&')}`;
+        } else {
+            this.params += `&${queryParams.join('&')}`;
         }
     }
 
-    private setFormattedUrl(
-        search: string = ''
-    ): string {
-        let path: string = this.apiUrl;
-        if (search.trim().length > 0) {
-            path += `/${search}`;
+    private buildQuery(extra: ParamType | null): string {
+        const merged = new URLSearchParams(this.params.replace(/^\?/, ''));
+        if (extra) {
+            Object.entries(extra).forEach(([key, value]) => merged.set(key, value.join(',')));
         }
-        const url = new URL(path);
-
-        return url.toString() + this.params;
+        const query = merged.toString();
+        return query ? `?${query}` : '';
     }
 
     public async getResource(
+        params: ParamType | null = null,
         search: string = ''
-    ): Promise<T[] | undefined>{
-        const url: string = this.setFormattedUrl(search)
+    ): Promise<T[] | undefined> {
+        let path: string = this.apiUrl;
+        if (search.trim().length > 0) path += `/${search}`;
+        const url = new URL(path).toString() + this.buildQuery(params);
         try {
             const response = await fetch(url, {
+                headers: { "Authorization": `Bearer ${this.API_KEY}` },
                 method: 'GET',
             });
-            if (response.ok) {
-                return await response.json();
+            const json = await response.json();
+            if (!response.ok || json.errors) {
+                throw new Error(json.errors?.[0]?.message ?? response.statusText);
             }
-            throw new Error(response.statusText);
+            return json.data.objects as T[];
         } catch (error) {
-            console.error(`Erreur survenue lors de la récupération de la ressource (${this.ressource}) : ${error}`);
+            console.error(`Erreur lors de la récupération de la ressource (${url}) : ${error}`);
         }
     }
 

@@ -36,7 +36,7 @@ export function History() {
                         </tr>
                     ) : (
                         guestedCountries.map((country) => (
-                            <HistoryRow key={country.name.official} country={country} />
+                            <HistoryRow key={country.names.official} country={country} />
                         ))
                     )}
                     </tbody>

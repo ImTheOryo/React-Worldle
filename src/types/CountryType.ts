@@ -1,4 +1,3 @@
-
 interface NativeName {
     common: string;
     official: string;
@@ -6,20 +5,20 @@ interface NativeName {
 
 interface Currency {
     name: string;
-    currency: string;
+    symbol: string;
 }
 
 export interface Country {
-    flags: {
-        png: string;
-        svg: string;
-        alt: string
+    flag: {
+        url_png: string;
+        url_svg: string;
+        description: string
     },
-    name: {
+    names: {
         common: string;
         official: string;
-        nativeName: {
-            [languageCode: string]: NativeName;
+        translations:{
+            [languageCode: string]: NativeName
         }
     },
     currencies: {
@@ -28,11 +27,18 @@ export interface Country {
     languages: {
         [languageCode: string]: string;
     },
-    independent: boolean,
+    classification?: {
+        sovereign?: boolean;
+        un_member?: boolean;
+        dependency?: boolean;
+    },
     region: string,
     subregion: string,
-    latlng: [number, number],
-    translations:{
-        [languageCode: string]: NativeName
+    coordinates: Record<string, number>,
+    uuid?: string,
+    codes?: {
+        alpha_2?: string;
+        alpha_3?: string;
+        ccn3?: string;
     }
 }

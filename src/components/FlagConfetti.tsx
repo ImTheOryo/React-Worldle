@@ -23,7 +23,7 @@ export default function FlagConfetti() {
             const pieces: Confetti[] = Array.from({ length: pieceCount }).map((_, i) => {
                 return {
                     id: i,
-                    src: selectedCountry.flags.png,
+                    src: selectedCountry.flag.url_png,
                     // Position horizontale aléatoire (de 0% à 100% de l'écran)
                     left: `${Math.random() * 100}vw`,
                     // Délai d'animation aléatoire pour qu'ils ne tombent pas tous en même temps

@@ -1,17 +1,40 @@
+import { useEffect, useState } from "react";
 import { useGame } from "../../contexts/GameContext.tsx";
 import { useHistory } from "../../contexts/HistoryContext.tsx";
 
 export function WinScreen() {
     const { selectedCountry } = useGame();
     const { guestedCountries } = useHistory();
+    const [isOpen, setIsOpen] = useState<boolean>(true);
 
     const tries = guestedCountries.length;
 
-    if (!selectedCountry) return null;
+    // Fermeture avec la touche Échap
+    useEffect(() => {
+        if (!isOpen) return;
+        const onKeyDown = (e: KeyboardEvent) => {
+            if (e.key === "Escape") setIsOpen(false);
+        };
+        window.addEventListener("keydown", onKeyDown);
+        return () => window.removeEventListener("keydown", onKeyDown);
+    }, [isOpen]);
+
+    if (!selectedCountry || !isOpen) return null;
 
     return (
-        <div className="w-full max-w-lg mx-auto mt-12 bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100 animate-[fadeIn_0.5s_ease-out]">
-            <div className="bg-sky-600 p-8 text-center text-white">
+        <div
+            role="dialog"
+            aria-label="Félicitations"
+            className="fixed w-full max-w-lg mx-auto mt-12 bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100 animate-[fadeIn_0.5s_ease-out] z-40"
+        >
+            <div className="relative bg-sky-600 p-8 text-center text-white">
+                <button
+                    onClick={() => setIsOpen(false)}
+                    aria-label="Fermer la fenêtre"
+                    className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full text-white/80 hover:text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-white transition-colors"
+                >
+                    ✕
+                </button>
                 <h2 className="text-3xl font-bold mb-2">Félicitations !</h2>
                 <p className="text-sky-100 text-lg">Vous avez trouvé le pays du jour.</p>
             </div>
@@ -19,7 +42,7 @@ export function WinScreen() {
             <div className="p-8 flex flex-col items-center">
                 <div className="text-center mb-6">
                     <p className="text-sm uppercase tracking-widest text-slate-400 font-semibold mb-1">Destination</p>
-                    <p className="text-4xl font-black text-slate-800">{selectedCountry.translations.fra.common}</p>
+                    <p className="text-4xl font-black text-slate-800">{selectedCountry.names.translations?.fra?.common ?? selectedCountry.names.common}</p>
                 </div>
 
                 <div className="flex gap-4 w-full justify-center mb-8">
@@ -35,6 +58,4 @@ export function WinScreen() {
             </div>
         </div>
     );
-
-
 }

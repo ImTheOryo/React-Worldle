@@ -5,6 +5,7 @@ import {useGame} from "../../contexts/GameContext.tsx";
 import {ModalPlayOtherDay} from "../../components/Win/ModalPlayOtherDay.tsx";
 import FlagConfetti from "../../components/FlagConfetti.tsx";
 import {useState} from "react";
+import {WorldMap} from "../../components/Game/WorldMap.tsx";
 import {RulesModal} from "../../components/shared/RulesModal.tsx";
 
 export function Game() {
@@ -45,6 +46,7 @@ export function Game() {
                 :
                 <SearchBar />
             }
+            <WorldMap />
             <History />
         </div>
     )

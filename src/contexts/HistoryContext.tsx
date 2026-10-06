@@ -19,7 +19,7 @@ export function HistoryContextProvider({ children}: GenericProviderProps) {
         setGuestedCountries(newGuestedCountries);
         localStorage.setItem(dateGuesses, JSON.stringify(newGuestedCountries))
 
-        if (country.name.common === selectedCountry?.name?.common) {
+        if (country.names.common === selectedCountry?.names?.common) {
             setIsWin(true)
         }
     }
@@ -32,7 +32,7 @@ export function HistoryContextProvider({ children}: GenericProviderProps) {
                 const alreadyGuesses: Country[] = JSON.parse(storedData);
                 setGuestedCountries(alreadyGuesses);
                 if (alreadyGuesses.find(
-                    (country: Country) => country.name.common === selectedCountry?.name.common)
+                    (country: Country) => country.names.common === selectedCountry?.names.common)
                 ) {
                     setIsWin(true)
                 }

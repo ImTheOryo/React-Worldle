@@ -10,11 +10,11 @@ export function useSearch(){
 
     const search: ((query: string)=>Country[]) = useCallback((query: string) => {
 
-        const excludedNames = new Set(guestedCountries.map(c => c.translations.fra.common));
+        const excludedNames = new Set(guestedCountries.map(c => c.names.translations.fra.common));
 
         return countries
             .filter((country: Country) => {
-                if (excludedNames.has(country.translations.fra.common)) {
+                if (excludedNames.has(country.names.translations.fra.common)) {
                     return false;
                 }
 
@@ -22,9 +22,9 @@ export function useSearch(){
                     return true;
                 }
 
-                return cleanString(country.translations.fra.common).includes(cleanString(query));
+                return cleanString(country.names.translations.fra.common).includes(cleanString(query));
             })
-            .sort((a: Country,b: Country) => a.translations.fra.common.localeCompare(b.translations.fra.common));
+            .sort((a: Country,b: Country) => a.names.translations.fra.common.localeCompare(b.names.translations.fra.common));
     }, [countries, guestedCountries]);
 
     return { search };

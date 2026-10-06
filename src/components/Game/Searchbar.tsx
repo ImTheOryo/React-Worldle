@@ -51,7 +51,7 @@ export function SearchBar() {
                 >
                     {filteredCountries.map((country: Country) => (
                         <li
-                            key={country.name.common}
+                            key={country.names.common}
                             role="option"
                             tabIndex={0}
                             aria-selected="false"
@@ -79,12 +79,12 @@ export function SearchBar() {
                         >
                             <img
                                 className="fit-picture w-6 h-auto shrink-0 shadow-sm"
-                                src={country.flags.png}
+                                src={country.flag.url_png}
                                 alt=''
                                 aria-hidden="true"
                             />
 
-                            <span>{country.translations.fra.common}</span>
+                            <span>{country.names.translations.fra.common}</span>
                         </li>
                     ))}
                 </ul>

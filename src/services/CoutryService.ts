@@ -4,24 +4,37 @@ import type {ParamType} from "../types/ParamType.ts";
 
 export class CountryService extends Service<Country>{
     constructor() {
-        const ressource: string = "all"
         const params: ParamType = {
-            "fields" : [
-                "name",
+            "response_fields" : [
+                "names",
                 "languages",
                 "currencies",
-                "independent",
+                "classification.sovereign",
                 "region",
                 "subregion",
-                "flags",
-                "latlng",
-                "translations"
-            ]
+                "flag",
+                "coordinates",
+                "uuid",
+                "codes"
+            ],
+            "limit" : ["100"]
         }
-        super(ressource, params);
+        super(params);
     }
 
     async getAllCountries(): Promise<Country[] | undefined> {
-        return this.getResource()
+        const PAGE_SIZE = 100;
+        const countries: Country[] = [];
+
+        for (let offset = 0; ; offset += PAGE_SIZE) {
+            const page = await this.getResource({
+                "offset" : [`${offset}`]
+            });
+            if (!page) break;
+            countries.push(...page);
+            if (page.length < PAGE_SIZE) break;
+        }
+
+        return countries;
     }
 }

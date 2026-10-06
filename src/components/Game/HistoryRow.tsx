@@ -2,6 +2,7 @@ import type { Country } from "../../types/CountryType.ts";
 import { useGame } from "../../contexts/GameContext.tsx";
 import { getGuessColor } from "../../services/GuessColorService.ts";
 import {getDistanceBetweenTwoPoints} from "calculate-distance-between-coordinates";
+import {formatCurrencies, formatLanguages, isSovereign} from "../../utils/utils.ts";
 
 interface HistoryRowProps {
     country: Country;
@@ -12,13 +13,11 @@ export function HistoryRow({ country }: HistoryRowProps) {
 
     if (!selectedCountry) return null;
 
-    const formatCurrencies = (c?: any) => c ? Object.values(c).map((curr: any) => curr.name).join(', ') : '-';
-    const formatLanguages = (l?: any) => l ? Object.values(l).join(', ') : '-';
     const formatBool = (b?: boolean) => b ? 'Yes' : 'No';
 
     const baseCellClass = "border-2 align-middle text-center p-2 h-[80px] font-bold shadow-md transition-colors duration-700";
 
-    const nameColor = country.name.common === selectedCountry.name.common
+    const nameColor = country.names.common === selectedCountry.names.common
         ? 'bg-green-700 text-white border-green-800'
         : 'bg-red-700 text-white border-red-800'
 
@@ -29,11 +28,11 @@ export function HistoryRow({ country }: HistoryRowProps) {
                 <div className="flex justify-center items-center gap-3">
                     <img
                         className="fit-picture w-6 h-auto shrink-0 shadow-sm"
-                        src={country.flags.png}
+                        src={country.flag.url_png}
                         alt=""
                         aria-hidden="true"
                     />
-                    <span className="line-clamp-3">{country.translations.fra.common || country.name.common}</span>
+                    <span className="line-clamp-3">{country.names.translations.fra.common || country.names.common}</span>
                 </div>
             </td>
 
@@ -58,17 +57,17 @@ export function HistoryRow({ country }: HistoryRowProps) {
             </td>
 
             {/* 6. Is independent */}
-            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'independent')} w-1/7`}>
-                <div className="line-clamp-3">{formatBool(country.independent)}</div>
+            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'classification')} w-1/7`}>
+                <div className="line-clamp-3">{formatBool(isSovereign(country))}</div>
             </td>
 
             {/* 7. Distance par rapport au pays selected */}
-            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'latlng')} rounded-r-xl w-1/7`}>
+            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'coordinates')} rounded-r-xl w-1/7`}>
                 <div>
                     {
                         getDistanceBetweenTwoPoints(
-                            {lat: country.latlng[0], lon: country.latlng[1]},
-                            {lat: selectedCountry.latlng[0], lon: selectedCountry.latlng[1]},
+                            {lat: country.coordinates.lat, lon: country.coordinates.lng},
+                            {lat: selectedCountry.coordinates.lat, lon: selectedCountry.coordinates.lng},
                             "km"
                         ).toFixed(2)
                     }
