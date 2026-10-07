@@ -1,30 +1,26 @@
 import type { Country } from "../../types/CountryType.ts";
 import { useGame } from "../../contexts/GameContext.tsx";
-import { getGuessColor } from "../../services/GuessColorService.ts";
-import {getDistanceBetweenTwoPoints} from "calculate-distance-between-coordinates";
-import {formatCurrencies, formatLanguages, isSovereign} from "../../utils/utils.ts";
+import { buildGuessCells } from "../../utils/guessCells.ts";
+import { frenchName } from "../../utils/utils.ts";
 
 interface HistoryRowProps {
     country: Country;
 }
 
+// Ligne de tableau (écrans larges). Sur mobile, voir HistoryCard.
 export function HistoryRow({ country }: HistoryRowProps) {
     const { selectedCountry } = useGame();
 
     if (!selectedCountry) return null;
 
-    const formatBool = (b?: boolean) => b ? 'Yes' : 'No';
+    const { nameCls, cells } = buildGuessCells(country, selectedCountry);
 
     const baseCellClass = "border-2 align-middle text-center p-2 h-[80px] font-bold shadow-md transition-colors duration-700";
 
-    const nameColor = country.names.common === selectedCountry.names.common
-        ? 'bg-green-700 text-white border-green-800'
-        : 'bg-red-700 text-white border-red-800'
-
     return (
         <tr className="group hover:opacity-95 transition-opacity">
-            {/* 1. Country */}
-            <td className={`${baseCellClass} ${nameColor} rounded-l-xl w-1/7`}>
+            {/* 1. Pays */}
+            <td className={`${baseCellClass} ${nameCls} rounded-l-xl w-1/7`}>
                 <div className="flex justify-center items-center gap-3">
                     <img
                         className="fit-picture w-6 h-auto shrink-0 shadow-sm"
@@ -32,48 +28,19 @@ export function HistoryRow({ country }: HistoryRowProps) {
                         alt=""
                         aria-hidden="true"
                     />
-                    <span className="line-clamp-3">{country.names.translations.fra.common || country.names.common}</span>
+                    <span className="line-clamp-3">{frenchName(country)}</span>
                 </div>
             </td>
 
-            {/* 2. Region */}
-            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'region')} w-1/7`}>
-                <div className="line-clamp-3">{country.region || '-'}</div>
-            </td>
-
-            {/* 3. Subregion */}
-            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'subregion')} w-1/7`}>
-                <div className="line-clamp-3">{country.subregion || '-'}</div>
-            </td>
-
-            {/* 4. Currencies */}
-            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'currencies')} w-1/7`}>
-                <div className="line-clamp-3">{formatCurrencies(country.currencies)}</div>
-            </td>
-
-            {/* 5. Languages */}
-            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'languages')} w-1/7`}>
-                <div className="line-clamp-3">{formatLanguages(country.languages)}</div>
-            </td>
-
-            {/* 6. Is independent */}
-            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'classification')} w-1/7`}>
-                <div className="line-clamp-3">{formatBool(isSovereign(country))}</div>
-            </td>
-
-            {/* 7. Distance par rapport au pays selected */}
-            <td className={`${baseCellClass} ${getGuessColor(country, selectedCountry, 'coordinates')} rounded-r-xl w-1/7`}>
-                <div>
-                    {
-                        getDistanceBetweenTwoPoints(
-                            {lat: country.coordinates.lat, lon: country.coordinates.lng},
-                            {lat: selectedCountry.coordinates.lat, lon: selectedCountry.coordinates.lng},
-                            "km"
-                        ).toFixed(2)
-                    }
-                    km
-                </div>
-            </td>
+            {/* 2 à 7. Région, sous-région, monnaies, langues, indépendance, distance */}
+            {cells.map((cell, index) => (
+                <td
+                    key={cell.label}
+                    className={`${baseCellClass} ${cell.cls} w-1/7 ${index === cells.length - 1 ? "rounded-r-xl" : ""}`}
+                >
+                    <div className="line-clamp-3">{cell.value}</div>
+                </td>
+            ))}
         </tr>
     );
 }

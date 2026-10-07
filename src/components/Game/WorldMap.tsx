@@ -64,6 +64,7 @@ export function WorldMap() {
     const [view, setView] = useState<View>(INITIAL_VIEW);
 
     const svgRef = useRef<SVGSVGElement | null>(null);
+    const panelRef = useRef<HTMLDivElement | null>(null);
     const pointers = useRef(new Map<number, { x: number; y: number }>());
     const downPos = useRef<{ x: number; y: number } | null>(null);
     const lastPinch = useRef<number | null>(null);
@@ -90,6 +91,11 @@ export function WorldMap() {
         svg.addEventListener("wheel", onWheel, {passive: false});
         return () => svg.removeEventListener("wheel", onWheel);
     }, []);
+
+    // Sur mobile le panneau est sous la carte : on le fait apparaître à l'écran après un tap sur un pays
+    useEffect(() => {
+        if (selectedCode) panelRef.current?.scrollIntoView({behavior: "smooth", block: "nearest"});
+    }, [selectedCode]);
 
     const zoomFromCenter = (factor: number) => setView((v) => zoomAt(v, factor, W / 2, H / 2));
 
@@ -170,7 +176,7 @@ export function WorldMap() {
     };
 
     return (
-        <section className="w-full max-w-5xl bg-white rounded-xl shadow-sm border border-slate-200 p-4" aria-label="Carte du monde">
+        <section className="w-full max-w-5xl bg-white rounded-xl shadow-sm border border-slate-200 p-2 sm:p-4" aria-label="Carte du monde">
             <div className="relative">
                 {hover && (
                     <div className="absolute top-2 left-2 px-3 py-1 text-sm font-semibold bg-slate-800/80 text-white rounded-lg pointer-events-none">
@@ -183,7 +189,7 @@ export function WorldMap() {
                         disabled={view.k >= MAX_K}
                         aria-label="Zoomer"
                         title="Zoomer"
-                        className="w-8 h-8 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold shadow-sm hover:bg-slate-100 disabled:opacity-40 disabled:hover:bg-white"
+                        className="w-10 h-10 sm:w-8 sm:h-8 text-lg sm:text-base rounded-lg bg-white border border-slate-300 text-slate-700 font-bold shadow-sm hover:bg-slate-100 disabled:opacity-40 disabled:hover:bg-white"
                     >
                         +
                     </button>
@@ -192,7 +198,7 @@ export function WorldMap() {
                         disabled={view.k <= MIN_K}
                         aria-label="Dézoomer"
                         title="Dézoomer"
-                        className="w-8 h-8 rounded-lg bg-white border border-slate-300 text-slate-700 font-bold shadow-sm hover:bg-slate-100 disabled:opacity-40 disabled:hover:bg-white"
+                        className="w-10 h-10 sm:w-8 sm:h-8 text-lg sm:text-base rounded-lg bg-white border border-slate-300 text-slate-700 font-bold shadow-sm hover:bg-slate-100 disabled:opacity-40 disabled:hover:bg-white"
                     >
                         −
                     </button>
@@ -201,7 +207,7 @@ export function WorldMap() {
                         disabled={view.k === MIN_K}
                         aria-label="Réinitialiser le zoom"
                         title="Réinitialiser le zoom"
-                        className="w-8 h-8 rounded-lg bg-white border border-slate-300 text-slate-700 text-sm shadow-sm hover:bg-slate-100 disabled:opacity-40 disabled:hover:bg-white"
+                        className="w-10 h-10 sm:w-8 sm:h-8 rounded-lg bg-white border border-slate-300 text-slate-700 text-base sm:text-sm shadow-sm hover:bg-slate-100 disabled:opacity-40 disabled:hover:bg-white"
                     >
                         ⟲
                     </button>
@@ -249,26 +255,29 @@ export function WorldMap() {
                 </svg>
             </div>
 
-            <ul className="flex flex-wrap gap-4 justify-center mt-3 text-sm text-slate-600">
+            <ul className="grid grid-cols-2 sm:flex sm:flex-wrap gap-x-4 gap-y-1.5 justify-center mt-3 text-xs sm:text-sm text-slate-600">
                 <li><span className="inline-block w-3 h-3 rounded-sm mr-1" style={{background: FILL.exact}}/>Exact</li>
                 <li><span className="inline-block w-3 h-3 rounded-sm mr-1" style={{background: FILL.partial}}/>Partiel / proche</li>
                 <li><span className="inline-block w-3 h-3 rounded-sm mr-1" style={{background: FILL.wrong}}/>Faux</li>
                 <li><span className="inline-block w-3 h-3 rounded-sm mr-1" style={{background: EMPTY}}/>Pas encore essayé</li>
             </ul>
             <p className="mt-2 text-center text-xs text-slate-400">
-                Zoom : boutons +/−, Ctrl (⌘) + molette ou pincement. Glissez pour déplacer la carte.
+                <span className="sm:hidden">Pincez ou utilisez +/− pour zoomer. Glissez pour déplacer la carte.</span>
+                <span className="hidden sm:inline">Zoom : boutons +/−, Ctrl (⌘) + molette ou pincement. Glissez pour déplacer la carte.</span>
             </p>
 
-            {infoCountry && (
-                <CountryInfoPanel
-                    country={infoCountry}
-                    target={selectedCountry}
-                    isGuessed={guessed.has(infoCountry.names.common)}
-                    canGuess={!isWin}
-                    onGuess={onGuessInfoCountry}
-                    onClose={() => setSelectedCode(null)}
-                />
-            )}
+            <div ref={panelRef}>
+                {infoCountry && (
+                    <CountryInfoPanel
+                        country={infoCountry}
+                        target={selectedCountry}
+                        isGuessed={guessed.has(infoCountry.names.common)}
+                        canGuess={!isWin}
+                        onGuess={onGuessInfoCountry}
+                        onClose={() => setSelectedCode(null)}
+                    />
+                )}
+            </div>
         </section>
     );
 }

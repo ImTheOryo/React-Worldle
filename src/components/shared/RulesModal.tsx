@@ -21,7 +21,7 @@ export function RulesModal({ isOpen, onClose }: RulesModalProps) {
 
     return (
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm transition-opacity"
+            className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-sm transition-opacity"
             role="dialog"
             aria-modal="true"
             aria-labelledby="rules-title"
@@ -29,14 +29,14 @@ export function RulesModal({ isOpen, onClose }: RulesModalProps) {
         >
             {/* Conteneur de la modale : stopPropagation empêche la fermeture si on clique à l'intérieur */}
             <div
-                className="relative w-full max-w-md p-6 bg-white shadow-2xl rounded-2xl cursor-default"
+                className="relative w-full max-w-md max-h-[calc(100dvh-1.5rem)] overflow-y-auto p-5 sm:p-6 bg-white shadow-2xl rounded-2xl cursor-default"
                 onClick={(e) => e.stopPropagation()}
             >
 
                 {/* Bouton de fermeture en haut à droite */}
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 transition-colors"
+                    className="absolute top-2 right-2 p-2.5 text-slate-400 hover:text-slate-700 transition-colors"
                     aria-label="Fermer les règles"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -44,7 +44,7 @@ export function RulesModal({ isOpen, onClose }: RulesModalProps) {
                     </svg>
                 </button>
 
-                <h2 id="rules-title" className="text-2xl font-bold mb-4 text-slate-800">
+                <h2 id="rules-title" className="text-xl sm:text-2xl font-bold mb-4 pr-10 text-slate-800">
                     Comment jouer ? ✈️
                 </h2>
 
@@ -82,7 +82,7 @@ export function RulesModal({ isOpen, onClose }: RulesModalProps) {
 
                 <button
                     onClick={onClose}
-                    className="w-full py-3 mt-6 font-semibold text-white transition-colors rounded-lg bg-sky-600 hover:bg-sky-700 shadow-sm"
+                    className="w-full min-h-12 py-3 mt-6 font-semibold text-white transition-colors rounded-lg bg-sky-600 hover:bg-sky-700 shadow-sm"
                 >
                     Commencer à jouer
                 </button>

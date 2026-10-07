@@ -18,7 +18,7 @@ export function NativeDatePicker() {
     };
 
     return (
-        <div className="mb-4">
+        <div className="w-full flex justify-center">
             <input
                 type="date"
                 id={"datePicker"}
@@ -28,7 +28,7 @@ export function NativeDatePicker() {
                 min={formatDateToYMD(START_DATE)}
                 max={formatDateToYMD(currentDate)}
                 className={`
-              block w-full max-w-sm p-2 bg-white rounded-md transition-shadow
+              block w-full max-w-sm min-h-12 px-3 py-2 text-base bg-white rounded-md transition-shadow
               focus:outline-none focus:ring-2 focus:ring-offset-2
               border border-gray-500 focus:border-blue-600 focus:ring-blue-600
             `}

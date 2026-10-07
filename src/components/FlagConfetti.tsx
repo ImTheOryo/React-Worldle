@@ -13,7 +13,8 @@ export default function FlagConfetti() {
 
     const {selectedCountry} = useGame();
     const [confetti, setConfetti] = useState<Confetti[] >([])
-    const pieceCount = 500;
+    // Moins de pièces sur petit écran : 500 images animées pèsent lourd sur mobile
+    const pieceCount = window.matchMedia("(max-width: 639px)").matches ? 60 : 150;
 
 
     useEffect(() => {
@@ -48,7 +49,7 @@ export default function FlagConfetti() {
                     key={`confetti-${index}`}
                     src={piece.src}
                     alt=""
-                    className="absolute top-[-4%] w-8 h-auto animate-flag-fall shadow-sm"
+                    className="absolute top-[-4%] w-6 sm:w-8 h-auto animate-flag-fall shadow-sm"
                     style={{
                         left: piece.left,
                         animationDelay: piece.delay,

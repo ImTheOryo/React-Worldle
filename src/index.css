@@ -22,3 +22,22 @@
         display: none;
     }
 }
+
+/* Apparition douce des fenêtres (utilisée par animate-[fadeIn_...]) */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Base mobile : pas de zoom de texte automatique, pas de scroll horizontal parasite */
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+svg path {
+    -webkit-tap-highlight-color: transparent;
+}

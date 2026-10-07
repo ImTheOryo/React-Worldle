@@ -1,5 +1,6 @@
 import { useHistory } from "../../contexts/HistoryContext.tsx";
 import { HistoryRow } from "./HistoryRow.tsx";
+import { HistoryCard } from "./HistoryCard.tsx";
 
 export function History() {
     const { guestedCountries } = useHistory();
@@ -7,11 +8,20 @@ export function History() {
         "Pays", "Région", "Sous-région", "Monnaie(s)", "Langue(s)", "Indépendant", "Distance avec le pays recherché"
     ];
 
+    if (guestedCountries.length === 0) return null;
+
     return (
-        <div className="w-full max-w-6xl mx-auto overflow-x-auto p-4 z-10">
-            {guestedCountries.length > 0 && (
+        <div className="w-full max-w-6xl mx-auto">
+            {/* Mobile / tablette : une carte par essai */}
+            <ul className="flex flex-col gap-3 lg:hidden" aria-label="Historique des essais">
+                {guestedCountries.map((country) => (
+                    <HistoryCard key={country.names.official} country={country} />
+                ))}
+            </ul>
+
+            {/* Écrans larges : tableau */}
+            <div className="hidden lg:block overflow-x-auto p-4 z-10">
                 <table className="w-full min-w-225 border-separate border-spacing-y-3" role="grid">
-                    {/* EN-TÊTE */}
                     <thead>
                     <tr>
                         {headers.map((header, index) => (
@@ -25,23 +35,13 @@ export function History() {
                         ))}
                     </tr>
                     </thead>
-
-                    {/* CORPS -> historique */}
                     <tbody>
-                    {guestedCountries.length === 0 ? (
-                        <tr>
-                            <td colSpan={6} className="p-8 text-center text-slate-500 rounded-lg bg-white shadow-sm border border-slate-200">
-                                Aucun pays trouvé pour le moment.
-                            </td>
-                        </tr>
-                    ) : (
-                        guestedCountries.map((country) => (
-                            <HistoryRow key={country.names.official} country={country} />
-                        ))
-                    )}
+                    {guestedCountries.map((country) => (
+                        <HistoryRow key={country.names.official} country={country} />
+                    ))}
                     </tbody>
                 </table>
-            )}
+            </div>
         </div>
     );
 }

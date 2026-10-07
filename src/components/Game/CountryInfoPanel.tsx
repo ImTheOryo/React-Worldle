@@ -48,18 +48,18 @@ export function CountryInfoPanel({country, target, isGuessed, canGuess, onGuess,
 
     return (
         <aside
-            className="mt-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+            className="mt-4 rounded-xl border border-slate-200 bg-white p-3 sm:p-4 shadow-sm"
             aria-label={`Informations sur ${frenchName(country)}`}
         >
-            <div className="flex items-center justify-between gap-3 mb-3">
-                <div className={`${BASE} flex items-center gap-3 ${nameColor}`}>
+            <div className="flex items-center justify-between gap-2 sm:gap-3 mb-3">
+                <div className={`${BASE} flex items-center gap-3 min-w-0 ${nameColor}`}>
                     <img className="w-8 h-auto shrink-0 shadow-sm" src={country.flag.url_png} alt="" aria-hidden="true"/>
-                    <span className="text-lg">{frenchName(country)}</span>
+                    <span className="text-base sm:text-lg truncate">{frenchName(country)}</span>
                 </div>
                 <button
                     onClick={onClose}
                     aria-label="Fermer"
-                    className="px-3 py-1 text-sm font-semibold text-slate-600 bg-slate-200 hover:bg-slate-300 rounded-full transition-colors"
+                    className="shrink-0 w-10 h-10 flex items-center justify-center text-sm font-semibold text-slate-600 bg-slate-200 hover:bg-slate-300 rounded-full transition-colors"
                 >
                     ✕
                 </button>
@@ -70,7 +70,7 @@ export function CountryInfoPanel({country, target, isGuessed, canGuess, onGuess,
                     {cells.map((cell) => (
                         <div key={cell.label} className={`${BASE} ${cell.cls}`}>
                             <dt className="text-xs uppercase tracking-wider opacity-80">{cell.label}</dt>
-                            <dd className="mt-1 text-sm">{cell.value}</dd>
+                            <dd className="mt-1 text-sm break-words">{cell.value}</dd>
                         </div>
                     ))}
                 </dl>
@@ -82,7 +82,7 @@ export function CountryInfoPanel({country, target, isGuessed, canGuess, onGuess,
                     {canGuess && (
                         <button
                             onClick={onGuess}
-                            className="px-4 py-2 text-sm font-semibold text-white bg-sky-600 hover:bg-sky-700 rounded-full transition-colors"
+                            className="w-full sm:w-auto min-h-11 px-5 py-2 text-sm font-semibold text-white bg-sky-600 hover:bg-sky-700 rounded-full transition-colors"
                         >
                             Proposer ce pays
                         </button>
