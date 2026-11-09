@@ -15,5 +15,16 @@
   <body>
     <div id="root"></div>
     <script type="module" src="./src/main.tsx"></script>
+    <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.auto.min.js"></script>
+    <script>
+      import Snowflakes from "magic-snowflakes";
+
+      new Snowflakes({
+        wind: true,
+        rotation: true,
+        color: "#ffffff",
+        zIndex: 5,
+      });
+    </script>
   </body>
 </html>
